@@ -1,5 +1,9 @@
 # ECS522U-Project
 
-clone https://github.com/AndyS005/ECS522U-Project.git
+```git clone https://github.com/AndyS005/ECS522U-Project.git```
+
+or 
+
+```git clone git@github.com:AndyS005/ECS522U-Project.git```
 
 cd weatherguard
