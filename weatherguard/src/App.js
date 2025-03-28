@@ -1,13 +1,25 @@
-import React from 'react';
-import Weather from './Weather';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import Home from './Pages/HomePage';
+import WeatherPage from './Pages/WeatherPage';
+import Analytics from './Pages/AnalyticsPage';
+import History from './Pages/HistoryPage';
+import Settings from './Pages/SettingsPage';
 
-const App = () => {
-  return (
+
+
+export default function App(){
+  return(
     <div>
-      <h1>Weather Forecast App</h1>
-      <Weather />
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/weather/:city" element={<WeatherPage />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </BrowserRouter>
     </div>
-  );
-};
-
-export default App;
+  )
+}
