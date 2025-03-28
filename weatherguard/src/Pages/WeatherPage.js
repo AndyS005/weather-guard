@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import '../CSS/WeatherPage.css'
+import '../CSS/WeatherPage.css';
+import Sidebar from '../Components/Sidebar';
 
 const WeatherPage = () => {
-    const { city } = useParams(); // Get city from URL
+    const { city } = useParams(); 
     const [weatherData, setWeatherData] = useState(null);
 
     console.log("City received from URL:", city);
@@ -26,14 +27,17 @@ const WeatherPage = () => {
 
 
     return (
-        <div className="Container">
-            <h1>Weather for {weatherData?.name}</h1>
-            <p>Temperature: {weatherData?.main?.temp}°C</p>
-            <p>Description: {weatherData?.weather[0]?.description}</p>
-            <p>Feels like: {weatherData?.main?.feels_like}°C</p>
-            <p>Humidity: {weatherData?.main?.humidity}%</p>
-            <p>Pressure: {weatherData?.main?.pressure} hPa</p>
-            <p>Wind Speed: {weatherData?.wind?.speed} m/s</p>
+        <div>
+            <Sidebar city = {city} />
+            <div className="Container">
+                <h1>Weather for {weatherData?.name}</h1>
+                <p>Temperature: {weatherData?.main?.temp}°C</p>
+                <p>Description: {weatherData?.weather[0]?.description}</p>
+                <p>Feels like: {weatherData?.main?.feels_like}°C</p>
+                <p>Humidity: {weatherData?.main?.humidity}%</p>
+                <p>Pressure: {weatherData?.main?.pressure} hPa</p>
+                <p>Wind Speed: {weatherData?.wind?.speed} m/s</p>
+            </div>
         </div>
     );
 };
