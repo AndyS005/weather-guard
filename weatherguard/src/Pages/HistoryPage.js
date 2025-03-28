@@ -3,7 +3,7 @@ import React from "react";
 const History = () => {
     return(
         <div>
-            <h1>Main Page after the location has been inputted</h1>
+            <h1>History page updates and selected after main page</h1>
         </div>
     )
 }
