@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 const Sidebar =({city}) => {
     return(
         <div className="sidebar">
+            
             <nav>
+                <h2>WeatherGuard</h2>
                 <ul>
                     <li>
                         <Link to="/">Home</Link>
