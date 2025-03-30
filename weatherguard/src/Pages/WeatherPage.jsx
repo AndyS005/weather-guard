@@ -41,7 +41,7 @@ const WeatherPage = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=b8da38f286323d8f0e29d5ae5deb63a5`
+                    `https://api.openweathermap.org/data/2.5/weather?q=${city},GB&units=metric&appid=b8da38f286323d8f0e29d5ae5deb63a5`
                 );
                 setWeatherData(response.data);
 
