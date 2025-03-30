@@ -1,6 +1,7 @@
 .weather-page {
     display: flex;
     height: 100vh;
+    
 }
 
 .main-content {
@@ -12,23 +13,22 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: #1F2937;
-    padding: 10px 20px;
+    padding: 1rem 2rem;
     color: #ffffff;
-    height: 50px;
+    height: 3rem;
 }
 
-header  {
+header {
     color: #3da6ff;
-    /* Light blue text */
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 
 select {
     background-color: #1e2a3a;
     color: #b0b8c5;
     border: none;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -38,7 +38,6 @@ select:hover {
     background-color: #263648;
 }
 
-
 .weather-info {
     display: flex;
     flex-direction: column;
@@ -47,35 +46,76 @@ select:hover {
     background-color: #1e2a3a;
     background: #1F2937;
     color: white;
-    border-radius: 16px;
-    margin: 10px;
-    padding: 40px;
-    width: 500px;
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 2.5rem;
+    width: 45rem;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
 }
 
 .weather-boxes {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
-    margin-top: 24px;
+    gap: 3rem;
+    margin-top: 1.5rem;
 }
 
 .box {
     background-color: #374151;
-    padding: 16px;
-    border-radius: 8px;
-    width: 100px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    width: 6.25rem;
     text-align: center;
 }
 
 .box p {
-    margin: 8px 0;
+    margin: 0.5rem 0;
 }
 
 .weather-sections {
     display: flex;
     flex-direction: row;
+}
 
+.weather-alerts {
+    background-color: #1e2a3a;
+    color: white;
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    width: 93.5%;
+    text-align: center;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+    align-self: stretch;
+    overflow-y: auto;
+    max-height: 17vh;
+    
+}
+
+.weather-alerts h2 {
+    margin-bottom: 1rem;
+}
+.weather-alerts p {
+    margin: 0.5rem 0;
+}
+.weather-alerts ul {
+    list-style-type: none;
+    padding: 0;
+}
+.weather-alerts li {
+    margin: 0.5rem 0;
+    background-color: #FFCC00; 
+    color: #263648;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    opacity: 0.5;
+}
+
+
+.weather-details{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
