@@ -15,8 +15,8 @@ export default function App(){
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/weather/:city" element={<WeatherPage />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/history" element={<History />} />
+          <Route path="/analytics/:city" element={<Analytics />} />
+          <Route path="/history/:city" element={<History />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
