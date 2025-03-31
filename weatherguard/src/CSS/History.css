@@ -1,0 +1,40 @@
+.history-page {
+    display: flex;
+    height: 100vh;
+    
+}
+
+.main-content {
+    width: 100%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1F2937;
+    padding: 1rem 2rem;
+    color: #ffffff;
+    height: 3rem;
+}
+
+header {
+    color: #3da6ff;
+    font-size: 1.125rem;
+}
+
+.weather-history {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1e2a3a;
+    background: #1F2937;
+    color: white;
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 2.5rem;
+    width: 45rem;
+    text-align: center;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+}

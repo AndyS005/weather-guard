@@ -11,8 +11,13 @@ const History = () => {
             <Sidebar  city = {city}/>
             <div className="main-content">
                 <header>
-                    <h1>History page updates and selected after main page</h1>
+                    <h1>{city}</h1>
+                    <br/>
+                    <h2>Weather history</h2>
                 </header>
+                <div className="weather-history">
+                    <p>Hello</p>
+                </div>
             </div>
         </div>
     )
