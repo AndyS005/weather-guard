@@ -23,6 +23,7 @@ const regions = [
 const History = () => {
     const { city } = useParams(); 
     const navigate = useNavigate();
+    console.log (city);
 
     const handleCityChange = async(e) => {
         const selectedCity = e.target.value;
@@ -47,8 +48,7 @@ const History = () => {
                     <h2>Weather history</h2>
                 </header>
                 <div className="weather-history">
-                    <h2>Recent Events</h2>
-                    <RecentEvents/>
+                    <RecentEvents city={city}/>
                 </div>
             </div>
         </div>
