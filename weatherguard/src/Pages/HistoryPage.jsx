@@ -5,6 +5,7 @@ import '../CSS/sidebar.css';
 import Sidebar from "../Components/Sidebar";
 import RecentEvents from "../Components/HistoryComponents/RecentEvents";
 import NotablePatterns from "../Components/HistoryComponents/NotablePatterns";
+import MonthlySummary from "../Components/HistoryComponents/MonthlySummary";
 
 const regions = [
     { name: "Lonsdads", region: "Choose Region" },
@@ -52,8 +53,8 @@ const History = () => {
                     <div className="weather-history">
                         <RecentEvents city={city}/>
                     </div>
-                    <div className="weather-history">
-                        <h2>Monthly Summary</h2>
+                    <div className="summary-section">
+                        <MonthlySummary city ={ city }/>
                     </div>
                     <div className="weather-history">
                         <NotablePatterns city={city}/>
