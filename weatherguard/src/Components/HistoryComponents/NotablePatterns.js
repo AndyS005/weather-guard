@@ -19,38 +19,38 @@ const NotablePatterns = ({ city }) => {
       try {
         const fetchedData = await fetchWeatherData(city, startingDate, endingDate);
         console.log(fetchedData);
-        // Check if fetchedData and fetchedData.daily exist
-        if (fetchedData && fetchedData.daily) {
+
+        if (fetchedData) {
           setWeatherData(fetchedData.daily);
+
         } else {
           console.error("Weather data is missing or not in expected format");
-          setWeatherData([]); // Set an empty array as fallback
+          setWeatherData([]); 
         }
       } catch (error) {
         console.error("Error fetching weather data:", error);
-        setWeatherData([]); // Set an empty array in case of error
+        setWeatherData([]); 
       }
     };
 
     loadWeatherData();
   }, [city]);
 
-  // Process weather patterns when weatherData changes
   useEffect(() => {
     if (!weatherData || weatherData.length === 0) {
-      return; // Skip if there's no data
+      return; 
     }
 
     const gatherPatterns = () => {
       let weatherPatterns = [];
 
-      // Check if wind speed data exists and is valid before processing
+
       const windSpeedData = weatherData?.wind_speed_10m_max ?? [];
       if (windSpeedData.length >= 3) {
         let avgWindSpeedStart = windSpeedData.slice(0, 3).reduce((a, b) => a + b, 0) / 3;
         let avgWindSpeedEnd = windSpeedData.slice(-3).reduce((a, b) => a + b, 0) / 3;
 
-        if (avgWindSpeedEnd > avgWindSpeedStart * 1.1) {  // 10% increase threshold
+        if (avgWindSpeedEnd > avgWindSpeedStart * 1.1) {
           weatherPatterns.push({
             type: "Increasing Wind Intensity",
             description: `10% increase in average wind speed over the last month.`,
@@ -65,7 +65,7 @@ const NotablePatterns = ({ city }) => {
         }
       }
 
-      // Check if precipitation data exists and is valid before processing
+
       const precipitationData = weatherData?.precipitation_sum ?? [];
       if (precipitationData.length >= 3) {
         let avgRainfallStart = precipitationData.slice(0, 3).reduce((a, b) => a + b, 0) / 3;
@@ -84,7 +84,6 @@ const NotablePatterns = ({ city }) => {
         }
       }
 
-      // Check if temperature data exists and is valid before processing
       const temperatureData = weatherData?.temperature_2m_max ?? [];
       if (temperatureData.length >= 3) {
         let avgTempStart = temperatureData.slice(0, 3).reduce((a, b) => a + b, 0) / 3;
@@ -107,13 +106,13 @@ const NotablePatterns = ({ city }) => {
     };
 
     gatherPatterns();
-  }, [weatherData]); // Only run gatherPatterns when weatherData changes
+  }, [weatherData]); 
 
   return (
     <div>
       <h2>Notable Patterns</h2>
       {patterns.length === 0 ? (
-        <p className="text-gray-400">No notable patterns detected.</p>
+        <p>No notable patterns detected.</p>
       ) : (
         <ul>
           {patterns.map((pattern, index) => (
