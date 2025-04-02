@@ -4,6 +4,7 @@ import '../CSS/History.css'
 import '../CSS/sidebar.css';
 import Sidebar from "../Components/Sidebar";
 import RecentEvents from "../Components/HistoryComponents/RecentEvents";
+import NotablePatterns from "../Components/HistoryComponents/NotablePatterns";
 
 const regions = [
     { name: "Lonsdads", region: "Choose Region" },
@@ -47,8 +48,16 @@ const History = () => {
                 <header>
                     <h2>Weather history</h2>
                 </header>
-                <div className="weather-history">
-                    <RecentEvents city={city}/>
+                <div className="history-content">
+                    <div className="weather-history">
+                        <RecentEvents city={city}/>
+                    </div>
+                    <div className="weather-history">
+                        <h2>Monthly Summary</h2>
+                    </div>
+                    <div className="weather-history">
+                        <NotablePatterns city={city}/>
+                    </div>
                 </div>
             </div>
         </div>
