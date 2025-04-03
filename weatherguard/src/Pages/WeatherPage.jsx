@@ -6,6 +6,7 @@ import Sidebar from '../Components/Sidebar';
 import WeatherMap from "../Components/WeatherMap"; 
 import '../CSS/sidebar.css';
 import 'leaflet/dist/leaflet.css';
+import windSpeed from '../Assets/Wind-Speed.png'
 
 // Reigions for the dropdown menu
 // This is a list of regions in the UK with their corresponding cities according to region's Lat and long
@@ -131,7 +132,7 @@ const WeatherPage = () => {
                                     
                                 </div>
                                 <div className="box">
-                                    <p>Rain</p>
+                                    <p>Humidity</p>
                                     <p>{weatherData?.main?.humidity}%</p>
                                 </div>
                             </div>
@@ -139,6 +140,7 @@ const WeatherPage = () => {
                         <div className="weather-info">
                                 {/* This displays the weather map */}
                                 <WeatherMap weatherData={weatherData} />
+                                <img src={windSpeed} alt="Indicator"/>
                         </div>
 
                     </div>
