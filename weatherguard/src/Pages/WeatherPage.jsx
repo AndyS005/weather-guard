@@ -39,13 +39,14 @@ const WeatherPage = () => {
     const [weatherData, setWeatherData] = useState(null);
     const [warningData, setWarningData] = useState(null);
 
-    // Function to format the date string
-    // This function takes a date string as input and returns a formatted date string
-    // The date string is formatted to include the day name, day number, month name, hour, and minutes
+    
     let disTemp = 0;
     let disFeelTemp = 0;
     const settings = JSON.parse(localStorage.getItem("settings_"));
 
+    // Function to format the date string
+    // This function takes a date string as input and returns a formatted date string
+    // The date string is formatted to include the day name, day number, month name, hour, and minutes
     const formatDate = (dateString) => {
         const date = new Date(dateString); 
         const options = { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minutes: '2-digit', hour12: true};
