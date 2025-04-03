@@ -23,9 +23,15 @@ const regions = [
 ]; // All possible UK Cities that the weather application displays 
 
 const History = () => {
+<<<<<<< HEAD
     const { city } = useParams(); // Data passed on from the other pages in the application
     const navigate = useNavigate(); // used to navigate to other pages in the app
     console.log (city);
+=======
+    const { city } = useParams(); 
+    const navigate = useNavigate();
+    console.log (localStorage.getItem("settings_"));
+>>>>>>> 3d308b783aeaef164de73c0d255fbc1d083dc877
 
     const handleCityChange = async(e) => {
         const selectedCity = e.target.value;

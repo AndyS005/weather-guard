@@ -119,3 +119,7 @@ select:hover {
     flex-direction: column;
     width: 100%;
 }
+
+img{
+    margin-top: 1rem;
+}

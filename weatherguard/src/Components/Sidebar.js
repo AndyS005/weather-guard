@@ -22,7 +22,7 @@ const Sidebar =({city}) => {
                         <Link to={`/history/${city}`}>History</Link>
                     </li>
                     <li>
-                        <Link to="/settings">Settings</Link>
+                        <Link to={`/settings/${city}`}>Settings</Link>
                     </li>
                 </ul>
             </nav>

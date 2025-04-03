@@ -5,6 +5,8 @@ import '../../CSS/MonthlySummary.css';
 const MonthlySummary = ({city}) => {//pass city through the props to be able to display information on specified city
     const [summary, setSummary] = useState([]);
     const [weatherData, setWeatherData] = useState([]);
+    const settings = JSON.parse(localStorage.getItem("settings_"));
+    console.log(settings['tempUnit']);
 
     useEffect(() => {
         const loadWeatherData = async () => {
@@ -53,9 +55,23 @@ const MonthlySummary = ({city}) => {//pass city through the props to be able to 
                 // obtain the average temperature using the max and min temps given by the api
                 const avgTemp = data.temperature_2m_max.reduce(
                     (sum, val, i) => sum + (val + data.temperature_2m_min[i]) / 2, 0
+<<<<<<< HEAD
                 ) / days; 
                 
                 // obtain the average rainfall using the precipitation sum given by the api
+=======
+                ) / days;
+
+                let disTemp = avgTemp
+    
+                console.log(settings["tempUnit"]);
+                if (settings["tempUnit"] == "Celsius"){
+                    disTemp = avgTemp.toFixed(2) + '°C';
+                } else{
+                    disTemp = (avgTemp * 9/5 + 32).toFixed(2) + "°F";
+                }
+
+>>>>>>> 3d308b783aeaef164de73c0d255fbc1d083dc877
                 const avgPrecipitation = data.precipitation_sum.reduce((sum, val) => sum + val, 0) / days;
 
                 // obtain the average windspeed using the wind speed at 10m of the ground given by the api
@@ -64,7 +80,7 @@ const MonthlySummary = ({city}) => {//pass city through the props to be able to 
                 //stores the corresponding data into one element on the array
                 return {
                     month,
-                    avgTemp: avgTemp.toFixed(2), 
+                    disTemp: disTemp, 
                     avgPrecipitation: avgPrecipitation.toFixed(2),
                     avgWindSpeed: avgWindSpeed.toFixed(2),
                 };
@@ -82,11 +98,12 @@ const MonthlySummary = ({city}) => {//pass city through the props to be able to 
             <h2 className="component-header">Monthly Summary</h2>
             {summary.length > 0 ? (
                 <ul>
-                    {summary.map(({ month, avgTemp, avgPrecipitation, avgWindSpeed }) => (
+                    {summary.map(({ month, disTemp, avgPrecipitation, avgWindSpeed }) => (
                     <div key={`${month}`} className="month-container">
                         <li className="Averages">
                             <h3 className="months-summary">{month}</h3>
-                            <p>🌡️ Avg Temp: {avgTemp}°C</p>
+                            
+                            <p>🌡️ Avg Temp: {disTemp}</p>
                             <p>🌧️ Avg Precipitation: {avgPrecipitation} mm</p>
                             <p>💨 Avg Wind Speed: {avgWindSpeed} km/h</p>
                         </li>

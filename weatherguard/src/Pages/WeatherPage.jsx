@@ -6,6 +6,7 @@ import Sidebar from '../Components/Sidebar';
 import WeatherMap from "../Components/WeatherMap"; 
 import '../CSS/sidebar.css';
 import 'leaflet/dist/leaflet.css';
+import windSpeed from '../Assets/Wind-Speed.png'
 
 // Reigions for the dropdown menu
 // This is a list of regions in the UK with their corresponding cities according to region's Lat and long
@@ -38,6 +39,11 @@ const WeatherPage = () => {
     const navigate = useNavigate();
     const [weatherData, setWeatherData] = useState(null);
     const [warningData, setWarningData] = useState(null);
+
+    
+    let disTemp = 0;
+    let disFeelTemp = 0;
+    const settings = JSON.parse(localStorage.getItem("settings_"));
 
     // Function to format the date string
     // This function takes a date string as input and returns a formatted date string
@@ -88,6 +94,16 @@ const WeatherPage = () => {
         navigate(`/weather/${selectedCity}`);
     }
 
+    console.log(weatherData);
+    if (weatherData) {
+        if (settings["tempUnit"] === 'Celsius') {
+            disTemp = (weatherData.main.temp).toFixed(2) + '°C';
+            disFeelTemp = (weatherData.main.feels_like).toFixed(2) + '°C';
+        } else {
+            disTemp = ((weatherData.main.temp) * 9 / 5 + 32).toFixed(2) + '°F';
+            disFeelTemp = (weatherData.main.feels_like * 9/5 + 32).toFixed(2) + '°F';
+        }
+    }
 
     return (
         // Render the weather page with sidebar, header, and weather details
@@ -112,14 +128,15 @@ const WeatherPage = () => {
                         {/* This displays the current weather information */}
                         <div className="weather-info">
                                     <img src={`https://openweathermap.org/img/wn/${weatherData?.weather[0]?.icon}@2x.png`} alt="Weather icon" />
-                                    <p>{weatherData?.main?.temp}°C</p>
+                                    
+                                    <p>{disTemp}</p>
                                     <p>{weatherData?.weather[0]?.description}</p>
 
                             <div className="weather-boxes">
 
                                 <div className="box">
                                     <p>Feels like</p>
-                                    <p>{weatherData?.main?.feels_like}°C</p>
+                                    <p>{disFeelTemp}</p>
                                 </div>
                                 <div className="box">
                                     <p>Wind</p>
@@ -131,7 +148,7 @@ const WeatherPage = () => {
                                     
                                 </div>
                                 <div className="box">
-                                    <p>Rain</p>
+                                    <p>Humidity</p>
                                     <p>{weatherData?.main?.humidity}%</p>
                                 </div>
                             </div>
@@ -139,6 +156,7 @@ const WeatherPage = () => {
                         <div className="weather-info">
                                 {/* This displays the weather map */}
                                 <WeatherMap weatherData={weatherData} />
+                                <img src={windSpeed} alt="Indicator"/>
                         </div>
 
                     </div>

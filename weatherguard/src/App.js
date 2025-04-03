@@ -8,6 +8,9 @@ import Settings from './Pages/SettingsPage';
 
 
 export default function App(){
+
+  
+
   return(
     <div>
       <BrowserRouter>
@@ -17,7 +20,7 @@ export default function App(){
           <Route path="/weather/:city" element={<WeatherPage />} />
           <Route path="/analytics/:city" element={<Analytics />} />
           <Route path="/history/:city" element={<History />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings/:city" element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </div>
