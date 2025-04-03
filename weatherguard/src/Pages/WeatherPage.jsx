@@ -7,6 +7,8 @@ import WeatherMap from "../Components/WeatherMap";
 import '../CSS/sidebar.css';
 import 'leaflet/dist/leaflet.css';
 
+// Reigions for the dropdown menu
+// This is a list of regions in the UK with their corresponding cities according to region's Lat and long
 const regions = [
     { name: "Lonsdads", region: "Choose Region" },
     { name: "Nottingham", region: "East Midlands" },
@@ -22,32 +24,46 @@ const regions = [
     { name: "Ballymena", region: "Northern Ireland" },
 ];
 
+// Warning codes for extreme weather conditions
+// These codes are used to filter out extreme weather conditions from the API response
+// The codes are based on the OpenWeatherMap API documentation
+// https://openweathermap.org/weather-conditions#Weather-Condition-Codes
 const warningCodes = [212, 221, 504, 511, 522, 531, 612, 613, 622, 771, 781, 800];
 
 
+// WeatherPage component
+// This component fetches and displays weather data for a specific city
 const WeatherPage = () => {
     const { city } = useParams(); 
     const navigate = useNavigate();
     const [weatherData, setWeatherData] = useState(null);
     const [warningData, setWarningData] = useState(null);
 
+    // Function to format the date string
+    // This function takes a date string as input and returns a formatted date string
+    // The date string is formatted to include the day name, day number, month name, hour, and minutes
     const formatDate = (dateString) => {
-        const date = new Date(dateString); // Create a Date object from the date string
-        const options = { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minutes: '2-digit', hour12: true}; // Formatting options to get day name and day
-        return date.toLocaleDateString('en-GB', options); // Return the formatted string (English)
+        const date = new Date(dateString); 
+        const options = { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minutes: '2-digit', hour12: true};
+        return date.toLocaleDateString('en-GB', options); 
     };
 
+
+    //Fetches weather data from OpenWeatherMap API
     useEffect(() => {
         const fetchData = async () => {
+            // Fetch weather data for the specified city
             try {
                 const response = await axios.get(
                     `https://api.openweathermap.org/data/2.5/weather?q=${city},GB&units=metric&appid=b8da38f286323d8f0e29d5ae5deb63a5`
                 );
                 setWeatherData(response.data);
-
+                // Fetch forecast data for the specified city
                 const forecastResponse = await axios.get(
                     `https://api.openweathermap.org/data/2.5/forecast?q=${city},GB&units=metric&appid=b8da38f286323d8f0e29d5ae5deb63a5`
                 );
+                // Filter the forecast data to get extreme weather warnings
+                // The forecast data is filtered to include only the items with weather codes that match the warning codes
                 const extremeWeather = forecastResponse.data.list
                 .flatMap(item => 
                     item.weather
@@ -66,6 +82,7 @@ const WeatherPage = () => {
         fetchData();
     }, [city]);
 
+    // Function to handle city change and to update information correspondingly
     const handleCityChange = async(e) => {
         const selectedCity = e.target.value;
         navigate(`/weather/${selectedCity}`);
@@ -73,12 +90,15 @@ const WeatherPage = () => {
 
 
     return (
+        // Render the weather page with sidebar, header, and weather details
         <div className="weather-page">
             <Sidebar city={city} />
             <div className="main-content">
+                {/* This displays the name of city and dropdown menu*/}
                 <header>
-                    <h1>{weatherData?.name}</h1>
-                
+
+                    <h1>{weatherData?.name }</h1>
+                    {/* This displays the different regions*/}
                     <select onChange={handleCityChange} value={city}>
                         {regions.map((region, index) => (
                             <option key={index} value={region.name}>
@@ -89,7 +109,7 @@ const WeatherPage = () => {
                 </header>  
                 <div className="weather-details">
                     <div className= "weather-sections">
-
+                        {/* This displays the current weather information */}
                         <div className="weather-info">
                                     <img src={`https://openweathermap.org/img/wn/${weatherData?.weather[0]?.icon}@2x.png`} alt="Weather icon" />
                                     <p>{weatherData?.main?.temp}°C</p>
@@ -117,12 +137,13 @@ const WeatherPage = () => {
                             </div>
                         </div>
                         <div className="weather-info">
-
+                                {/* This displays the weather map */}
                                 <WeatherMap weatherData={weatherData} />
                         </div>
 
                     </div>
                         <div className="weather-alerts">
+                            {/* This displays the extreme weather warnings if there are any*/}
                             <h2>Extreme Weather Warnings</h2>
                                 {warningData && warningData.length > 0 ? (
                                     <ul>
