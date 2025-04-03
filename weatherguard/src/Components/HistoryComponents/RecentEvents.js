@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import { fetchWeatherData } from "./fetchHistory";
 import '../../CSS/RecentEvent.css';
 
-const RecentEvents = ({ city }) => {
+const RecentEvents = ({ city }) => {//pass city through the props to be able to display information on specified city
     const [events, setEvents] = useState([]);
     const [weatherData, setWeatherData] = useState(null);
 
     useEffect(() => {
         const loadWeatherData = async () => {
-            const today = new Date().toISOString().split("T")[0];
+            const today = new Date().toISOString().split("T")[0]; //todays date
 
-            const twoWeeksAgo = new Date();
-            twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 7);
-            const twoWeeksAgoDate = twoWeeksAgo.toISOString().split("T")[0];
+            const oneWeeksAgo = new Date();
+            oneWeeksAgo.setDate(oneWeeksAgo.getDate() - 7);
+            const oneWeeksAgoDate = oneWeeksAgo.toISOString().split("T")[0]; // date last week
 
-            const fetchedData = await fetchWeatherData(city, twoWeeksAgoDate, today);
+            const fetchedData = await fetchWeatherData(city, oneWeeksAgoDate, today);
             console.log(fetchedData);
             setWeatherData(fetchedData.daily);
         };
@@ -33,15 +33,15 @@ const RecentEvents = ({ city }) => {
             for (let i = 0; i < weatherData.time.length; i++) {
                 console.log(weatherData.time[i]);
 
-                // Wind Events
-                if (weatherData.wind_speed_10m_max[i] > 5 && weatherData.wind_speed_10m_max[i] <= 10) {
+                // Wind Events that occured in the last week
+                if (weatherData.wind_speed_10m_max[i] > 5 && weatherData.wind_speed_10m_max[i] <= 10) { //moderate class still harmful but only to young crops
                     weatherEvents.push({
                         date: weatherData.time[i],
                         type: "Moderate Winds",
                         description: `Wind speeds of ${weatherData.wind_speed_10m_max[i]} m/s were reached, affecting young crops.`,
                     });
                 }  
-                if (weatherData.wind_speed_10m_max[i] > 10) {
+                if (weatherData.wind_speed_10m_max[i] > 10) { // dangerous class. very harmful to any crops
                     weatherEvents.push({
                         date: weatherData.time[i],
                         type: "Strong Winds",
@@ -49,15 +49,15 @@ const RecentEvents = ({ city }) => {
                     });
                 }
 
-                // Temperature Events
-                if (weatherData.temperature_2m_max[i] > 28) {
+                // Temperature Events that occured in the last week
+                if (weatherData.temperature_2m_max[i] > 28) { //dangerously hot temps for crops
                     weatherEvents.push({
                         date: weatherData.time[i],
                         type: "Dangerous Temperatures",
                         description: `Temperature of up to ${weatherData.temperature_2m_max[i]}°C, dangerously affecting crops.`,
                     });
                 }  
-                if (weatherData.temperature_2m_max[i] < 0) {
+                if (weatherData.temperature_2m_max[i] < 0) {// dangerously low temps for crops
                     weatherEvents.push({
                         date: weatherData.time[i],
                         type: "Critically Low Temperature",
@@ -65,8 +65,8 @@ const RecentEvents = ({ city }) => {
                     });
                 }
 
-                // Rain Events
-                if (weatherData.precipitation_sum[i] > 7.5) {
+                // Rain Events that occured in the last week
+                if (weatherData.precipitation_sum[i] > 7.5) {// dangerous amounts of rain for crops and soil
                     weatherEvents.push({
                         date: weatherData.time[i],
                         type: "Excessive Rainfall",
@@ -89,7 +89,7 @@ const RecentEvents = ({ city }) => {
                 <p className="no-events">No major events within the last week.</p>
             ) : (
                 <ul className="event-list">
-                    {events.map((event, index) => (
+                    {events.map((event, index) => ( //loop through all events and display them
                         <li key={index} className="event-item">
                             <h3 className="event-title">{event.type}</h3>
                             <p className="event-date">{event.date}</p>

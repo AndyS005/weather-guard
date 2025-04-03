@@ -20,21 +20,23 @@ const regions = [
     { name: "Cardiff", region: "Wales" },
     { name: "Edinburgh", region: "Scotland" },
     { name: "Ballymena", region: "Northern Ireland" },
-];
+]; // All possible UK Cities that the weather application displays 
 
 const History = () => {
-    const { city } = useParams(); 
-    const navigate = useNavigate();
+    const { city } = useParams(); // Data passed on from the other pages in the application
+    const navigate = useNavigate(); // used to navigate to other pages in the app
     console.log (city);
 
     const handleCityChange = async(e) => {
         const selectedCity = e.target.value;
-        navigate(`/history/${selectedCity}`);
-    }
+        if (selectedCity !== "Lonsdads"){ //prevents the api from trying to display data for the placeholder city
+            navigate(`/history/${selectedCity}`);
+        };
+    } // re renders the history page with the new city that the user has selected.
 
     return(
         <div className="history-page">
-            <Sidebar  city = {city}/>
+            <Sidebar  city = {city}/> {/* Calls the sidebar component with the city attribute */}
             <div className="main-content">
                 <header className="main-header">
                     <h1>{city}</h1>
@@ -45,11 +47,12 @@ const History = () => {
                             </option>
                         ))}
                     </select>
-                </header>
+                </header> {/* displays the header containing the city name and the select element allowing the user to change the region they are viewing */}
                 <header>
                     <h2>Weather history</h2>
                 </header>
                 <div className="history-content">
+                    {/* calls individual components that display relevant information depending on the city */}
                     <div className="weather-history">
                         <RecentEvents city={city}/>
                     </div>

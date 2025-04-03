@@ -1,4 +1,4 @@
-const getCoordinates = async (city) => {
+const getCoordinates = async (city) => { //API responsible for getting the coordinates of the city that is entered
     const CoOrdsApi = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`;
 
     try {
@@ -18,7 +18,7 @@ const getCoordinates = async (city) => {
       }
 };
 
-const fetchWeatherData = async (city, startDate, endDate) => {
+const fetchWeatherData = async (city, startDate, endDate) => { // API that gets historical data depending on the city and the start and end date defining the time for which we require the data
   const coOrds = await getCoordinates(city);
   
   if (!coOrds) {
@@ -39,4 +39,4 @@ const fetchWeatherData = async (city, startDate, endDate) => {
   }
 };
 
-export { getCoordinates, fetchWeatherData };
+export { getCoordinates, fetchWeatherData }; // allows for other programs to make use of these functions where needed.
