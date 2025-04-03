@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '../Components/Sidebar';
 import '../CSS/SettingsPage.css';
 import { Bell, Globe, Thermometer } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 
 const SettingToggle = ({ label, enabled, onChange }) => (
   <div className="setting-item">
@@ -27,22 +28,33 @@ const SettingSelector = ({ label, options, value, onChange }) => (
 );
 
 const SettingsPage = () => {
-  const [settings, setSettings] = useState({
-    tempUnit: 'Celsius',
-    timeFormat: '24h',
-    language: 'English',
-    notifications: true,
-    alerts: true,
-    darkMode: true,
-  });
+  const { city } = useParams();
 
+  const [settings, setSettings] = useState(() => {
+    const savedSettings = localStorage.getItem("settings_");
+    return savedSettings
+      ? JSON.parse(savedSettings)
+      : {
+          tempUnit: 'Celsius',
+          timeFormat: '24h',
+          language: 'English',
+          notifications: true,
+          alerts: true,
+          darkMode: true,
+        };
+  });
+  
+
+  console.log(JSON.stringify(settings));
   const updateSetting = (key, value) => {
-    setSettings((prev) => ({ ...prev, [key]: value }));
+    const updatedSettings = { ...settings, [key]: value };
+    setSettings(updatedSettings);
+    localStorage.setItem("settings_", JSON.stringify(updatedSettings));
   };
 
   return (
     <div className="settings-page">
-      <Sidebar />
+      <Sidebar city={city}/>
       <div className="main-content">
         <header className="main-header">
           <h1>Settings</h1>
