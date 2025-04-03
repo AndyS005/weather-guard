@@ -5,6 +5,8 @@ import '../../CSS/MonthlySummary.css';
 const MonthlySummary = ({city}) => {
     const [summary, setSummary] = useState([]);
     const [weatherData, setWeatherData] = useState([]);
+    const settings = JSON.parse(localStorage.getItem("settings_"));
+    console.log(settings['tempUnit']);
 
     useEffect(() => {
         const loadWeatherData = async () => {
@@ -48,14 +50,23 @@ const MonthlySummary = ({city}) => {
                 const avgTemp = data.temperature_2m_max.reduce(
                     (sum, val, i) => sum + (val + data.temperature_2m_min[i]) / 2, 0
                 ) / days;
+
+                let disTemp = avgTemp
     
+                console.log(settings["tempUnit"]);
+                if (settings["tempUnit"] == "Celsius"){
+                    disTemp = avgTemp.toFixed(2) + '°C';
+                } else{
+                    disTemp = (avgTemp * 9/5 + 32).toFixed(2) + "°F";
+                }
+
                 const avgPrecipitation = data.precipitation_sum.reduce((sum, val) => sum + val, 0) / days;
     
                 const avgWindSpeed = data.wind_speed_10m_max.reduce((sum, val) => sum + val, 0) / days;
     
                 return {
                     month,
-                    avgTemp: avgTemp.toFixed(2), 
+                    disTemp: disTemp, 
                     avgPrecipitation: avgPrecipitation.toFixed(2),
                     avgWindSpeed: avgWindSpeed.toFixed(2),
                 };
@@ -73,11 +84,12 @@ const MonthlySummary = ({city}) => {
             <h2 className="component-header">Monthly Summary</h2>
             {summary.length > 0 ? (
                 <ul>
-                    {summary.map(({ month, avgTemp, avgPrecipitation, avgWindSpeed }) => (
+                    {summary.map(({ month, disTemp, avgPrecipitation, avgWindSpeed }) => (
                     <div key={`${month}`} className="month-container">
                         <li className="Averages">
                             <h3 className="months-summary">{month}</h3>
-                            <p>🌡️ Avg Temp: {avgTemp}°C</p>
+                            
+                            <p>🌡️ Avg Temp: {disTemp}</p>
                             <p>🌧️ Avg Precipitation: {avgPrecipitation} mm</p>
                             <p>💨 Avg Wind Speed: {avgWindSpeed} km/h</p>
                         </li>

@@ -25,7 +25,7 @@ const regions = [
 const History = () => {
     const { city } = useParams(); 
     const navigate = useNavigate();
-    console.log (city);
+    console.log (localStorage.getItem("settings_"));
 
     const handleCityChange = async(e) => {
         const selectedCity = e.target.value;
