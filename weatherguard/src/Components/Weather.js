@@ -3,6 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../CSS/weather.css";
 
+const regions = [
+    { name: "Lonsdads", region: "Choose Region" },
+    { name: "Nottingham", region: "East Midlands" },
+    { name: "Birmingham", region: "West Midlands" },
+    { name: "Manchester", region: "North West" },
+    { name: "Liverpool", region: "North West" },
+    { name: "Leeds", region: "Yorkshire and the Humber" },
+    { name: "London", region: "London" },
+    { name: "Bristol", region: "South West" },
+    { name: "Tonbridge", region: "South East" },
+    { name: "Cardiff", region: "Wales" },
+    { name: "Edinburgh", region: "Scotland" },
+    { name: "Ballymena", region: "Northern Ireland" },
+  ];
+
 const Weather = () => {
     const [city, setCity] = useState('');
     const navigate = useNavigate ();
@@ -26,10 +41,10 @@ const Weather = () => {
     };
 
 
-    const handleInputChange = (e) => {
-        setCity(e.target.value);
-        setErrorMessage('');
-    };
+    const handleCityChange = async(e) => {
+        const selectedCity = e.target.value;
+        navigate(`/weather/${selectedCity}`);
+    }
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -46,13 +61,13 @@ const Weather = () => {
     return (
         <div>
             <form onSubmit={handleSubmit} >
-                <input
-                    className='location-input'
-                    type="text"
-                    placeholder="Enter city name"
-                    value={city}
-                    onChange={handleInputChange}
-                />
+                <select onChange={handleCityChange} value={city} className='location-input'>
+                    {regions.map((region, index) => (
+                        <option key={index} value={region.name}>
+                            {region.region}
+                        </option>
+                    ))}
+                </select>
                 <button type="submit">Get Weather</button>
             </form>
 

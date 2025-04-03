@@ -55,23 +55,17 @@ const MonthlySummary = ({city}) => {//pass city through the props to be able to 
                 // obtain the average temperature using the max and min temps given by the api
                 const avgTemp = data.temperature_2m_max.reduce(
                     (sum, val, i) => sum + (val + data.temperature_2m_min[i]) / 2, 0
-<<<<<<< HEAD
-                ) / days; 
-                
-                // obtain the average rainfall using the precipitation sum given by the api
-=======
                 ) / days;
 
                 let disTemp = avgTemp
     
                 console.log(settings["tempUnit"]);
-                if (settings["tempUnit"] == "Celsius"){
+                if (settings["tempUnit"] === "Celsius"){
                     disTemp = avgTemp.toFixed(2) + '°C';
                 } else{
                     disTemp = (avgTemp * 9/5 + 32).toFixed(2) + "°F";
                 }
 
->>>>>>> 3d308b783aeaef164de73c0d255fbc1d083dc877
                 const avgPrecipitation = data.precipitation_sum.reduce((sum, val) => sum + val, 0) / days;
 
                 // obtain the average windspeed using the wind speed at 10m of the ground given by the api
