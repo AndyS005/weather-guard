@@ -9,7 +9,7 @@ import Settings from './Pages/SettingsPage';
 
 export default function App(){
 
-  
+  ///Basic routing is done such that pages can be linked to each other
 
   return(
     <div>
