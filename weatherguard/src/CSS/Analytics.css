@@ -1,0 +1,76 @@
+.analytics-page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #0D1117;
+    color: white;
+}
+
+.analytics-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid #374151;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    font-size: 1.75rem;
+    text-align: center;
+}
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive dynamic grid */
+    gap: 1.5rem;
+    padding: 0 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.analytics-section {
+    background: #1F2937;
+    padding: 1.75rem;
+    border-radius: 12px;
+    border: 1px solid #374151;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease-in-out;
+}
+
+.analytics-section:hover {
+    transform: translateY(-4px); /* Subtle hover effect */
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-header .icon {
+    font-size: 1.5rem; /* Bigger for better visual appeal */
+}
+
+.section-header h3 {
+    color: #3da6ff;
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.recommendation-card {
+    background: #374151;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .analytics-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+        gap: 1rem;
+    }
+
+    .analytics-header {
+        padding: 1rem 1.5rem;
+        font-size: 1.5rem;
+    }
+}
