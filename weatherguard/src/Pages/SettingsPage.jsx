@@ -31,8 +31,36 @@ const SettingsPage = () => {
   /// city variable initialised for access after a change in page.
   const { city } = useParams();
 
-  /// an array of extreme weather condidtion codes
-  const alertCodes = [212,221,504,511,522,531,612,613,622,771,781,800];
+  /// an array of weather condidtions
+  const weatherConditions = [
+    "Heavy Thunderstorm",
+    "Ragged Thunderstorm",
+    "Extreme Rain",
+    "Freezing Rain",
+    "Heavy Intensity Shower Rain",
+    "Ragged Shower Rain",
+    "Light Shower Sleet",
+    "Shower Sleet",
+    "Heavy Shower Snow",
+    "Squalls",
+    "Tornado",
+    "Clear Sky",
+  ];
+
+  const weatherConditionsMap = {
+    212: "Heavy Thunderstorm",
+    221: "Ragged Thunderstorm",
+    504: "Extreme Rain",
+    511: "Freezing Rain",
+    522: "Heavy Intensity Shower Rain",
+    531: "Ragged Shower Rain",
+    612: "Light Shower Sleet",
+    613: "Shower Sleet",
+    622: "Heavy Shower Snow",
+    771: "Squalls",
+    781: "Tornado",
+    800: "Clear Sky",
+  };
 
   /// Initialisation of settings constant using a condition
   /// if settings already in localStorage, retrive
@@ -71,6 +99,28 @@ const SettingsPage = () => {
     } else{
       alert("Notifications are now off.")
     }
+  };
+
+  const updateAlert = (key, value) => {
+
+    const codeWeatherCondition = {
+      "Heavy Thunderstorm": 212,
+      "Ragged Thunderstorm": 221,
+      "Extreme Rain": 504,
+      "Freezing Rain": 511,
+      "Heavy Intensity Shower Rain": 522,
+      "Ragged Shower Rain": 531,
+      "Light Shower Sleet": 612,
+      "Shower Sleet": 613,
+      "Heavy Shower Snow": 622,
+      "Squalls": 771,
+      "Tornado": 781,
+      "Clear Sky": 800,
+    };
+
+    updateSetting(key, codeWeatherCondition[value]);
+
+
   };
 
   return (
@@ -113,15 +163,15 @@ const SettingsPage = () => {
             <h2><UserPen /> Personalised Alerts</h2>
             <SettingSelector
               label="Alert 1"
-              options={alertCodes}
-              value={settings.Alert_1}
-              onChange={(value) => updateSetting('Alert_1', value)}
+              options={weatherConditions}
+              value={weatherConditionsMap[settings.Alert_1]}
+              onChange={(value) => updateAlert('Alert_1', value)}
             />
             <SettingSelector
               label="Alert 2"
-              options={alertCodes}
-              value={settings.Alert_2}
-              onChange={(value) => updateSetting('Alert_2', value)}
+              options={weatherConditions}
+              value={weatherConditionsMap[settings.Alert_2]}
+              onChange={(value) => updateAlert('Alert_2', value)}
             />
             <SettingToggle
               label="Personalised Alerts"
