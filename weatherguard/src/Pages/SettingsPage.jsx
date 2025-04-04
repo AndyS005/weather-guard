@@ -14,7 +14,7 @@ const SettingToggle = ({ label, enabled, onChange }) => (
       <span className="toggle-circle" />
     </button>
   </div>
-);
+);/// Function to implement toggle buttons in setting where applicable/needed.
 
 const SettingSelector = ({ label, options, value, onChange }) => (
   <div className="setting-item">
@@ -25,12 +25,18 @@ const SettingSelector = ({ label, options, value, onChange }) => (
       ))}
     </select>
   </div>
-);
+);/// Function to implement the selection list where needed in settings.
 
 const SettingsPage = () => {
+  /// city variable initialised for access after a change in page.
   const { city } = useParams();
+
+  /// an array of extreme weather condidtion codes
   const alertCodes = [212,221,504,511,522,531,612,613,622,771,781,800];
 
+  /// Initialisation of settings constant using a condition
+  /// if settings already in localStorage, retrive
+  /// else initialize with default
   const [settings, setSettings] = useState(() => {
     const savedSettings = localStorage.getItem("settings_");
     return savedSettings
@@ -48,15 +54,15 @@ const SettingsPage = () => {
         };
   });
   
-
-
-  console.log(JSON.stringify(settings));
+  /// Function to update the settings constant and localStorage
   const updateSetting = (key, value) => {
     const updatedSettings = { ...settings, [key]: value };
     setSettings(updatedSettings);
     localStorage.setItem("settings_", JSON.stringify(updatedSettings));
   };
 
+  /// Function to update notification setting
+  /// Raises a system alert/notification (here, in web browser)
   const changeNotifications = (key, value) => {
     updateSetting(key, value);
 
