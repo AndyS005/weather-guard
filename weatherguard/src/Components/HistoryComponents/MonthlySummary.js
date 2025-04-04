@@ -6,7 +6,6 @@ const MonthlySummary = ({city}) => {//pass city through the props to be able to 
     const [summary, setSummary] = useState([]);
     const [weatherData, setWeatherData] = useState([]);
     const settings = JSON.parse(localStorage.getItem("settings_"));
-    console.log(settings['tempUnit']);
 
     useEffect(() => {
         const loadWeatherData = async () => {
@@ -57,9 +56,10 @@ const MonthlySummary = ({city}) => {//pass city through the props to be able to 
                     (sum, val, i) => sum + (val + data.temperature_2m_min[i]) / 2, 0
                 ) / days;
 
+                /// Declare variable to store avgTemp is either Celsius or Fahrenheit
                 let disTemp = avgTemp
-    
-                console.log(settings["tempUnit"]);
+
+                /// Conditional statement to set disTemp according to the settings.
                 if (settings["tempUnit"] === "Celsius"){
                     disTemp = avgTemp.toFixed(2) + '°C';
                 } else{
