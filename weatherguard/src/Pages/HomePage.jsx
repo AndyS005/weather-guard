@@ -5,6 +5,9 @@ import "../CSS/App.css";
 
 const Home = () => {
 
+  /// Initializing the default setting for webapp.
+  /// These are loaded into the localStorage so that the setting can be accessed and are saved
+  /// throughout.
   localStorage.setItem('settings_', JSON.stringify({
     tempUnit: 'Celsius',
     timeFormat: '24h',
