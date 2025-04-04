@@ -40,7 +40,6 @@ const WeatherPage = () => {
     const [weatherData, setWeatherData] = useState(null);
     const [warningData, setWarningData] = useState(null);
     const settings = JSON.parse(localStorage.getItem("settings_"));
-    console.log(settings);
     const personalisedAlertCodes = [settings['Alert_1'], settings.Alert_2];
 
     let displayTemp = 0;
@@ -69,9 +68,13 @@ const WeatherPage = () => {
                 const forecastResponse = await axios.get(
                     `https://api.openweathermap.org/data/2.5/forecast?q=${city},GB&units=metric&appid=b8da38f286323d8f0e29d5ae5deb63a5`
                 );
-                // Filter the forecast data to get extreme weather warnings
-                // The forecast data is filtered to include only the items with weather codes that match the warning codes
+                
+                /// Checking if personalised alerts are turned on or not.
+                /// Thus setting warningData accordingly
+                /// If turned on, extreme weather conditions are filtered out according to the alert codes set in the settings
+                /// All extreme weather conditions are presented if turned off
                 if (settings.personalisedAlerts === true ){
+                    /// only the personalised/selected codes remain
                     const extremeWeather = forecastResponse.data.list
                     .flatMap(item => 
                         item.weather
@@ -83,6 +86,7 @@ const WeatherPage = () => {
                     );
                     setWarningData(extremeWeather);
                 }else{
+                    /// only the extreme warning codes remain
                     const extremeWeather = forecastResponse.data.list
                     .flatMap(item => 
                         item.weather
@@ -109,7 +113,10 @@ const WeatherPage = () => {
         navigate(`/weather/${selectedCity}`);
     }
 
-    console.log(weatherData);
+    /// Conditional statements to help change the temprature unit to the one in settings
+    /// the displayed temprature and the 'feels like' tempratures are modified to 
+    /// either be presented in degree Celsius or Fahrenheit
+    /// as set in the settings
     if (weatherData) {
         if (settings["tempUnit"] === 'Celsius') {
             displayTemp = (weatherData.main.temp).toFixed(2) + '°C';
@@ -119,9 +126,6 @@ const WeatherPage = () => {
             displayFeelTemp = (weatherData.main.feels_like * 9/5 + 32).toFixed(2) + '°F';
         }
     }
-
-    const personalisedAlertsSetting = settings.personalisedAlerts;
-    console.log(personalisedAlertsSetting);
 
     return (
         // Render the weather page with sidebar, header, and weather details
@@ -146,7 +150,8 @@ const WeatherPage = () => {
                         {/* This displays the current weather information */}
                         <div className="weather-info">
                                     <img src={`https://openweathermap.org/img/wn/${weatherData?.weather[0]?.icon}@2x.png`} alt="Weather icon" />
-                                    
+
+                                    {/* Displayed temprature in Celsius or Fahrenheit as set*/}
                                     <p>{displayTemp}</p>
                                     <p>{weatherData?.weather[0]?.description}</p>
 
@@ -154,6 +159,7 @@ const WeatherPage = () => {
 
                                 <div className="box">
                                     <p>Feels like</p>
+                                    {/* Displayed temprature in Celsius or Fahrenheit as set*/}
                                     <p>{displayFeelTemp}</p>
                                 </div>
                                 <div className="box">
