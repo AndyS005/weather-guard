@@ -1,3 +1,7 @@
+/*************************************************************/
+/// Code for side bar that is used for navigation between pages
+/*************************************************************/
+
 import React from "react";
 import { Link } from "react-router-dom";
 
