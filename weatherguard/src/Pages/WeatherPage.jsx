@@ -39,11 +39,12 @@ const WeatherPage = () => {
     const navigate = useNavigate();
     const [weatherData, setWeatherData] = useState(null);
     const [warningData, setWarningData] = useState(null);
-
-    
-    let disTemp = 0;
-    let disFeelTemp = 0;
     const settings = JSON.parse(localStorage.getItem("settings_"));
+    console.log(settings);
+    const personalisedAlertCodes = [settings['Alert_1'], settings.Alert_2];
+
+    let displayTemp = 0;
+    let displayFeelTemp = 0;
 
     // Function to format the date string
     // This function takes a date string as input and returns a formatted date string
@@ -70,16 +71,30 @@ const WeatherPage = () => {
                 );
                 // Filter the forecast data to get extreme weather warnings
                 // The forecast data is filtered to include only the items with weather codes that match the warning codes
-                const extremeWeather = forecastResponse.data.list
-                .flatMap(item => 
-                    item.weather
-                    .filter(weather => warningCodes.includes(weather.id))
-                    .map(weather => ({
-                        date: formatDate(item.dt_txt),
-                        description: weather.description
-                    }))
-                );
-                setWarningData(extremeWeather);
+                if (settings.personalisedAlerts === true ){
+                    const extremeWeather = forecastResponse.data.list
+                    .flatMap(item => 
+                        item.weather
+                        .filter(weather => personalisedAlertCodes.includes(weather.id))
+                        .map(weather => ({
+                            date: formatDate(item.dt_txt),
+                            description: weather.description
+                        }))
+                    );
+                    setWarningData(extremeWeather);
+                }else{
+                    const extremeWeather = forecastResponse.data.list
+                    .flatMap(item => 
+                        item.weather
+                        .filter(weather => warningCodes.includes(weather.id))
+                        .map(weather => ({
+                            date: formatDate(item.dt_txt),
+                            description: weather.description
+                        }))
+                    );
+                    setWarningData(extremeWeather);
+                }
+                
             } catch (err) {
                 console.log(err);
             }
@@ -97,13 +112,16 @@ const WeatherPage = () => {
     console.log(weatherData);
     if (weatherData) {
         if (settings["tempUnit"] === 'Celsius') {
-            disTemp = (weatherData.main.temp).toFixed(2) + '°C';
-            disFeelTemp = (weatherData.main.feels_like).toFixed(2) + '°C';
+            displayTemp = (weatherData.main.temp).toFixed(2) + '°C';
+            displayFeelTemp = (weatherData.main.feels_like).toFixed(2) + '°C';
         } else {
-            disTemp = ((weatherData.main.temp) * 9 / 5 + 32).toFixed(2) + '°F';
-            disFeelTemp = (weatherData.main.feels_like * 9/5 + 32).toFixed(2) + '°F';
+            displayTemp = ((weatherData.main.temp) * 9 / 5 + 32).toFixed(2) + '°F';
+            displayFeelTemp = (weatherData.main.feels_like * 9/5 + 32).toFixed(2) + '°F';
         }
     }
+
+    const personalisedAlertsSetting = settings.personalisedAlerts;
+    console.log(personalisedAlertsSetting);
 
     return (
         // Render the weather page with sidebar, header, and weather details
@@ -129,14 +147,14 @@ const WeatherPage = () => {
                         <div className="weather-info">
                                     <img src={`https://openweathermap.org/img/wn/${weatherData?.weather[0]?.icon}@2x.png`} alt="Weather icon" />
                                     
-                                    <p>{disTemp}</p>
+                                    <p>{displayTemp}</p>
                                     <p>{weatherData?.weather[0]?.description}</p>
 
                             <div className="weather-boxes">
 
                                 <div className="box">
                                     <p>Feels like</p>
-                                    <p>{disFeelTemp}</p>
+                                    <p>{displayFeelTemp}</p>
                                 </div>
                                 <div className="box">
                                     <p>Wind</p>

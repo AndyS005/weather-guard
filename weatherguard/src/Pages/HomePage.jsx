@@ -5,15 +5,17 @@ import "../CSS/App.css";
 
 const Home = () => {
 
-  const settings_ = {
+  localStorage.setItem('settings_', JSON.stringify({
     tempUnit: 'Celsius',
     timeFormat: '24h',
     language: 'English',
     notifications: true,
-    alerts: true,
+    recommendations: true,
     darkMode: true,
-  };
-  localStorage.setItem("settings_", JSON.stringify(settings_));
+    Alert_1: 212,
+    Alert_2: 212,
+    personalisedAlerts: false,
+  }));
 
   return (
     <div className='App'>

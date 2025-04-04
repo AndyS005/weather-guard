@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from '../Components/Sidebar';
 import '../CSS/SettingsPage.css';
-import { Bell, Globe, Thermometer } from 'lucide-react';
+import { Bell, Globe, Thermometer, UserPen} from 'lucide-react';
 import { useParams } from 'react-router-dom';
 
 const SettingToggle = ({ label, enabled, onChange }) => (
@@ -29,6 +29,7 @@ const SettingSelector = ({ label, options, value, onChange }) => (
 
 const SettingsPage = () => {
   const { city } = useParams();
+  const alertCodes = [212,221,504,511,522,531,612,613,622,771,781,800];
 
   const [settings, setSettings] = useState(() => {
     const savedSettings = localStorage.getItem("settings_");
@@ -39,17 +40,31 @@ const SettingsPage = () => {
           timeFormat: '24h',
           language: 'English',
           notifications: true,
-          alerts: true,
+          recommendations: true,
           darkMode: true,
+          Alert_1: 212,
+          Alert_2: 212,
+          personalisedAlerts: false,
         };
   });
   
+
 
   console.log(JSON.stringify(settings));
   const updateSetting = (key, value) => {
     const updatedSettings = { ...settings, [key]: value };
     setSettings(updatedSettings);
     localStorage.setItem("settings_", JSON.stringify(updatedSettings));
+  };
+
+  const changeNotifications = (key, value) => {
+    updateSetting(key, value);
+
+    if (settings.notifications === false){
+      alert("Notifications are now on.");
+    } else{
+      alert("Notifications are now off.")
+    }
   };
 
   return (
@@ -80,26 +95,41 @@ const SettingsPage = () => {
             <SettingToggle
               label="Enable Notifications"
               enabled={settings.notifications}
-              onChange={(value) => updateSetting('notifications', value)}
+              onChange={(value) => changeNotifications('notifications', value)}
             />
             <SettingToggle
-              label="Weather Alerts"
-              enabled={settings.alerts}
-              onChange={(value) => updateSetting('alerts', value)}
+              label="Recommendations"
+              enabled={settings.recommendations}
+              onChange={(value) => updateSetting('recommendations', value)}
+            />
+          </div>
+          <div id="pnotify" className="settings-section">
+            <h2><UserPen /> Personalised Alerts</h2>
+            <SettingSelector
+              label="Alert 1"
+              options={alertCodes}
+              value={settings.Alert_1}
+              onChange={(value) => updateSetting('Alert_1', value)}
+            />
+            <SettingSelector
+              label="Alert 2"
+              options={alertCodes}
+              value={settings.Alert_2}
+              onChange={(value) => updateSetting('Alert_2', value)}
+            />
+            <SettingToggle
+              label="Personalised Alerts"
+              enabled={settings.personalisedAlerts}
+              onChange={(value) => updateSetting('personalisedAlerts', value)}
             />
           </div>
           <div className="settings-section">
             <h2><Globe /> Display & Language</h2>
             <SettingSelector
               label="Language"
-              options={["English", "Français", "Español", "Deutsch"]}
+              options={["English"]}
               value={settings.language}
               onChange={(value) => updateSetting('language', value)}
-            />
-            <SettingToggle
-              label="Dark Mode"
-              enabled={settings.darkMode}
-              onChange={(value) => updateSetting('darkMode', value)}
             />
           </div>
         </div>
