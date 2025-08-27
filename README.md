@@ -1,4 +1,4 @@
-# ECS522U-Project
+# weather-guard
 
 ```git clone https://github.com/AndyS005/weather-guard.git```
 
